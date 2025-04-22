@@ -13,6 +13,7 @@ import {
 import { Suspense } from 'react';
 import { createMenuItems } from '@vaadin/hilla-file-router/runtime.js';
 
+
 function Header() {
   // TODO Replace with real application logo and name
   return (
@@ -45,7 +46,7 @@ function UserMenu() {
     {
       component: (
         <>
-          <Avatar theme="xsmall" name="John Smith" colorIndex={5} className="mr-s" /> John Smith
+          <Avatar theme="xsmall" name="Jetanin Naitho" colorIndex={5} className="mr-s" /> John Smith
         </>
       ),
       children: [
@@ -68,7 +69,9 @@ function UserMenu() {
 
 export default function MainLayout() {
   return (
-    <AppLayout primarySection="drawer">
+    <AppLayout primarySection="drawer" onClick={(e) => {
+      
+}}>
       <Header />
       <Scroller slot="drawer">
         <MainMenu />
