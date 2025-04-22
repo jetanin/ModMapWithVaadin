@@ -13,13 +13,19 @@ import {
 import { Suspense } from 'react';
 import { createMenuItems } from '@vaadin/hilla-file-router/runtime.js';
 
+import { Link } from 'react-router';
+import LogoImg from './img/KMUTT_Logo.jpg';
 
 function Header() {
   // TODO Replace with real application logo and name
   return (
     <div className="flex p-m gap-m items-center" slot="drawer">
-      <Icon icon="vaadin:cubes" className="text-primary icon-l" />
-      <span className="font-semibold text-l">Fast Dasher Core</span>
+      <Link to="/">
+        <img src={LogoImg} className="text-primary icon-l" />
+      </Link>
+      <Link to="/">
+        <span className="font-bold text-xl">MOD MAP</span>
+      </Link>
     </div>
   );
 }
