@@ -3,6 +3,8 @@ import { Checkbox } from '@vaadin/react-components';
 import { MultiSelectComboBox } from '@vaadin/react-components';
 import React, {useState} from "react";
 
+import  SvgIcon  from "./SVJ.js";
+
 import {ViewConfig} from "@vaadin/hilla-file-router/types.js";
 import mapImg from "./img/map.jpg";
 
