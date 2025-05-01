@@ -1,0 +1,17 @@
+[
+  {
+    "route": "",
+    "menu": {
+      "exclude": true
+    },
+    "flowLayout": false,
+    "params": {},
+    "title": "Main"
+  },
+  {
+    "route": "Svg",
+    "flowLayout": false,
+    "params": {},
+    "title": "S V G Component"
+  }
+]

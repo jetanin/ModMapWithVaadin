@@ -1,0 +1,22 @@
+Picked up JAVA_TOOL_OPTIONS: -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8
+15:16:45.925 [main] INFO org.springframework.boot.devtools.restart.RestartApplicationListener -- Restart disabled due to context in which it is running
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.4.3)
+
+2025-04-23T15:16:46.305+07:00  INFO 42592 --- [           main] c.fastandfurious.reindeer.Application    : Starting Application using Java 24.0.1 with PID 42592 (C:\Work\2567\2567-2\CPE112_Project\Non-Build\WebBase\fast-dasher-core\target\classes started by jetan in C:\Work\2567\2567-2\CPE112_Project\Non-Build\WebBase\fast-dasher-core)
+2025-04-23T15:16:46.306+07:00  INFO 42592 --- [           main] c.fastandfurious.reindeer.Application    : No active profile set, falling back to 1 default profile: "default"
+2025-04-23T15:16:47.388+07:00  INFO 42592 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-23T15:16:47.526+07:00  INFO 42592 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 125 ms. Found 1 JPA repository interface.
+2025-04-23T15:16:49.182+07:00  INFO 42592 --- [           main] org.reflections.Reflections              : Reflections took 367 ms to scan 69 urls, producing 659 keys and 3864 values
+2025-04-23T15:16:49.334+07:00  INFO 42592 --- [           main] org.reflections.Reflections              : Reflections took 12 ms to scan 1 urls, producing 20 keys and 27 values
+2025-04-23T15:16:50.412+07:00  INFO 42592 --- [           main] org.reflections.Reflections              : Reflections took 87 ms to scan 69 urls, producing 659 keys and 3864 values
+2025-04-23T15:16:50.856+07:00  INFO 42592 --- [           main] org.reflections.Reflections              : Reflections took 13 ms to scan 1 urls, producing 20 keys and 27 values
+2025-04-23T15:16:51.641+07:00  INFO 42592 --- [           main] org.reflections.Reflections              : Reflections took 43 ms to scan 49 urls, producing 421 keys and 2311 values
+2025-04-23T15:16:51.742+07:00  INFO 42592 --- [           main] c.v.h.springnative.HillaHintsRegistrar   : Resource /hilla-openapi.json is being used for registering endpoint types

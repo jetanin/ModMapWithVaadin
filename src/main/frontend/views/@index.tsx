@@ -15,7 +15,7 @@ export default function MainView() {
     const [selectedStartPoint, setSelectedStartPoint] = useState<string | null>(null);
     const [selectedValues, setSelectedValues] = useState<string[]>([]);
     const [isStartPointLocked, setIsStartPointLocked] = useState<boolean>(false);
-
+    const [totalDistance, setTotalDistance] = null;
     const Building = [
         { label: '● S1 อาคารวิศวกรรมเครื่องกล 4 (Mechanical Engineering Building 4)', value: 'S1' },
         { label: '● S2 อาคารจอดรถ (Car Parking Building)', value: 'S2' },
@@ -81,6 +81,7 @@ export default function MainView() {
     const handleClear = () => {
         setSelectedValues([]);
         setSelectedStartPoint(null);
+        setTotalDistance(null);
         setIsStartPointLocked(false);
         console.log("Start values:", selectedStartPoint);
         console.log("Cleared values:", selectedValues);
@@ -93,21 +94,22 @@ export default function MainView() {
         }
     
         const requestData = {
-            selectedStartPoint: parseInt(selectedStartPoint, 10), // Convert to integer
+            selectedStartPoint: selectedStartPoint,
             selectedValues: selectedValues,
+            totalDistance: totalDistance,
         };
     
         try {
             const response = await axios.post('/api/calculate', requestData);
             if (response.data.status === "success") {
-                alert(`Result: ${response.data.result}`);
+                // alert(`Result: ${response.data.result}`);
                 console.log("Response from server:", response.data);
             } else {
                 alert(`Error: ${response.data.message}`);
                 console.error("Error response from server:", response.data);
             }
         } catch (error) {
-            console.error("Error submitting data:", error);
+            // console.error("Error submitting data:", error);
             alert("Failed to submit data. Please try again.");
         }
         // alert("SUBMITED");

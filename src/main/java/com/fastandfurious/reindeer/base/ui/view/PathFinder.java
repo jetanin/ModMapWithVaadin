@@ -1,9 +1,9 @@
 package com.fastandfurious.reindeer.base.ui.view;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class PathFinder {
-    public static class pathFind {
-        Graph graph;
+    public static class RequestData {
         public String selectedStartPoint;
         public List<String> selectedValues;
+    }
+    public static class pathFind {
+        Graph graph;
 
-        public pathFind(String selectedStartPoint, List<String> selectedValues) {
+        public pathFind() {
             this.graph = new Graph();
-            this.selectedStartPoint = selectedStartPoint;
-            this.selectedValues = selectedValues;
 
             // Add nodes to the graph
             for (String node : List.of(
@@ -102,17 +102,30 @@ public class PathFinder {
             graph.addEdge("N7", "N8", 20);
             graph.addEdge("N8", "N9", 100);
 
+            
+        }
+
+        @PostMapping("/pathFinder")
+        public Map<String, Object> calculate(@RequestBody RequestData request) {
+            Map<String, Object> path = new HashMap<>();
             //ระบุจุด
-            String start = this.selectedStartPoint;
-            String end = this.selectedStartPoint;
-            List<String> waypoints = this.selectedValues;
+            String start = request.selectedStartPoint;
+            String end = request.selectedStartPoint;
+            List<String> waypoints = request.selectedValues;
 
             //หาเส้นทาง 
-            RouteFinder.Result result = RouteFinder.findRoute(graph, start, waypoints, end);
-            System.out.println("path " + String.join("->",result.path));
-            System.out.println("Total Distances: "+ result.totalDistance);
-            response.put("result", result.totalDistance);
-            response.put("status", "success");
+            
+            // System.out.println("path " + String.join("->",result.path));
+            // System.out.println("Total Distances: "+ result.totalDistance);
+            try {
+                RouteFinder.Result result = RouteFinder.findRoute(graph, start, waypoints, end);
+                path.put("result", result.totalDistance);
+                path.put("status", "success");
+            } catch (Exception e) {
+                path.put("status", "error");
+                path.put("message", "An error occurred while processing the request.");
+            }
+            return path;
         }
     }
 }

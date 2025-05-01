@@ -1,0 +1,11 @@
+{
+  "version" : "0.2.0",
+  "configurations" : [ {
+    "type" : "java",
+    "name" : "Debug using Hotswap Agent",
+    "javaExec" : "C:\\Users\\jetan\\.vaadin\\jdk\\jbrsdk-21.0.6-windows-x64-b895.97\\bin\\java.exe",
+    "request" : "launch",
+    "mainClass" : "com.fastandfurious.reindeer.Application",
+    "vmArgs" : "-XX:+AllowEnhancedClassRedefinition -XX:+ClassUnloading -XX:HotswapAgent=fatjar"
+  } ]
+}
