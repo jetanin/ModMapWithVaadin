@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -101,31 +103,30 @@ public class PathFinder {
             graph.addEdge("N7", "N9", 80);
             graph.addEdge("N7", "N8", 20);
             graph.addEdge("N8", "N9", 100);
-
-            
         }
-
-        @PostMapping("/pathFinder")
-        public Map<String, Object> calculate(@RequestBody RequestData request) {
-            Map<String, Object> path = new HashMap<>();
-            //ระบุจุด
+        
+        @PostMapping("/PathFinder")
+        public ResponseEntity<Map<String, Object>> calculate(@RequestBody RequestData request) {
+            Map<String, Object> response = new HashMap<>();
             String start = request.selectedStartPoint;
             String end = request.selectedStartPoint;
             List<String> waypoints = request.selectedValues;
-
-            //หาเส้นทาง 
             
-            // System.out.println("path " + String.join("->",result.path));
-            // System.out.println("Total Distances: "+ result.totalDistance);
             try {
                 RouteFinder.Result result = RouteFinder.findRoute(graph, start, waypoints, end);
-                path.put("result", result.totalDistance);
-                path.put("status", "success");
+                int numVertices = result.path.size();
+                System.out.println("path " + String.join("->",result.path));
+                System.out.println("Total Distances: "+ result.totalDistance);
+                // Perform calculations (example logic)
+                response.put("status", "success");
+                response.put("numVertices", numVertices);
+                response.put("totalDistance", result.totalDistance);
+                return ResponseEntity.ok(response);
             } catch (Exception e) {
-                path.put("status", "error");
-                path.put("message", "An error occurred while processing the request.");
+                response.put("status", "error");
+                response.put("message", e.getMessage());
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
             }
-            return path;
         }
     }
 }

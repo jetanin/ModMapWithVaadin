@@ -15,7 +15,8 @@ export default function MainView() {
     const [selectedStartPoint, setSelectedStartPoint] = useState<string | null>(null);
     const [selectedValues, setSelectedValues] = useState<string[]>([]);
     const [isStartPointLocked, setIsStartPointLocked] = useState<boolean>(false);
-    const [totalDistance, setTotalDistance] = null;
+    const [totalDistance, setTotalDistance] = useState<number | null>(null);
+    const [numVerices, setNumVerices] = useState<number | null>(null);
     const Building = [
         { label: '● S1 อาคารวิศวกรรมเครื่องกล 4 (Mechanical Engineering Building 4)', value: 'S1' },
         { label: '● S2 อาคารจอดรถ (Car Parking Building)', value: 'S2' },
@@ -75,19 +76,21 @@ export default function MainView() {
             return [value];
         });
         console.log(selectedValues);
-        
     };
 
     const handleClear = () => {
         setSelectedValues([]);
         setSelectedStartPoint(null);
+        setNumVerices(null);
         setTotalDistance(null);
         setIsStartPointLocked(false);
         console.log("Start values:", selectedStartPoint);
         console.log("Cleared values:", selectedValues);
+        console.log("NumVertices:", numVerices);
+        console.log("Total Distance:", totalDistance);
     };
     
-    const handleSubmit = async() => {
+    const handleSubmit = async () => {
         if (!selectedStartPoint || selectedValues.length === 0) {
             alert("Please select a start point and at least one value.");
             return;
@@ -96,26 +99,26 @@ export default function MainView() {
         const requestData = {
             selectedStartPoint: selectedStartPoint,
             selectedValues: selectedValues,
-            totalDistance: totalDistance,
         };
     
         try {
-            const response = await axios.post('/api/calculate', requestData);
+            const response = await axios.post('/api/PathFinder', requestData);
             if (response.data.status === "success") {
-                // alert(`Result: ${response.data.result}`);
-                console.log("Response from server:", response.data);
+                setNumVerices(response.data.numVerices);
+                setTotalDistance(response.data.totalDistance);
+                alert(`Total Distance: ${response.data.totalDistance} meters`);
             } else {
                 alert(`Error: ${response.data.message}`);
-                console.error("Error response from server:", response.data);
             }
         } catch (error) {
-            // console.error("Error submitting data:", error);
-            alert("Failed to submit data. Please try again.");
+            console.error("Error submitting data:", error);
+            alert("An unexpected error occurred. Please try again.");
         }
-        // alert("SUBMITED");
-        console.log("Submited");
+        console.log("Submitted");
         console.log("Start values:", selectedStartPoint);
         console.log("Selected values:", selectedValues);
+        console.log("NumVertices:", numVerices);
+        console.log("Total Distance:", totalDistance);
     };
 
     return (
@@ -143,12 +146,23 @@ export default function MainView() {
                     />
 
                     <div className="mt-4 text-left text-sm text-gray-700">
+                        <strong>Selected Start Point:</strong>{" "}
+                        <ul>
+                            {selectedStartPoint ? <li>{selectedStartPoint}</li> : <li>None</li>}
+                        </ul>
                         <strong>Selected:</strong>{" "}
                         <ul>
-                            {selectedStartPoint || "None"}
                             {selectedValues.map((value, index) => (
-                                <li key={index}>{value}</li> 
+                                <li key={index}>{value}</li>
                             ))}
+                        </ul>
+                        <strong>Number of Vertices:</strong>
+                        <ul>
+                            {numVerices !== null ? <li>{numVerices}</li> : <li>None</li>}
+                        </ul>
+                        <strong>Total Distance:</strong>
+                        <ul>
+                            {totalDistance !== null ? <li>{totalDistance} meters</li> : <li>None</li>}
                         </ul>
                     </div>
                 <div id='button-container' className="justify-center text-center flex">
