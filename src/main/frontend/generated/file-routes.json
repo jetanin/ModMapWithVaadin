@@ -9,6 +9,12 @@
     "title": "Main"
   },
   {
+    "route": "history",
+    "flowLayout": false,
+    "params": {},
+    "title": "History"
+  },
+  {
     "route": "Svg",
     "flowLayout": false,
     "params": {},
