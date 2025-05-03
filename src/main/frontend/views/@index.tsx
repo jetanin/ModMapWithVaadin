@@ -5,6 +5,8 @@ import  SvgIcon  from "./Svg.jsx";
 import {ViewConfig} from "@vaadin/hilla-file-router/types.js";
 import axios from 'axios';
 
+import History from '../components/History';
+
 export const config: ViewConfig = {
     menu: {
         exclude: true
@@ -130,19 +132,19 @@ export default function MainView() {
                 <SvgIcon className='ml-10 mr-10 mt-3'/>
                 
                 <div id='checkBoxContainer' className='grid'>
-                <ComboBox
-                    label="เลือกจุดเริ่มต้น"
-                    className='mb-10 mt-10'
-                    items={Building}
-                    style={{maxWidth: '1000px', minWidth: '300px', width: '550px'}}
-                    onValueChanged={handleStartPointChange}
-                    disabled={isStartPointLocked}
-                />
-                <ComboBox
-                    label="เลือกสถานที่ที่ต้องการจะแวะ"
-                    items={Building.filter((item) => item.value !== selectedStartPoint && !selectedValues.includes(item.value))}
-                    style={{maxWidth: '1000px', minWidth: '300px', width: '550px'}}
-                    onValueChanged={handleValueChange}
+                    <ComboBox
+                        label="เลือกจุดเริ่มต้น"
+                        className='mb-10 mt-10'
+                        items={Building}
+                        style={{maxWidth: '1000px', minWidth: '300px', width: '550px'}}
+                        onValueChanged={handleStartPointChange}
+                        disabled={isStartPointLocked}
+                    />
+                    <ComboBox
+                        label="เลือกสถานที่ที่ต้องการจะแวะ"
+                        items={Building.filter((item) => item.value !== selectedStartPoint && !selectedValues.includes(item.value))}
+                        style={{maxWidth: '1000px', minWidth: '300px', width: '550px'}}
+                        onValueChanged={handleValueChange}
                     />
 
                     <div className="mt-4 text-left text-sm text-gray-700">
@@ -165,24 +167,29 @@ export default function MainView() {
                             {totalDistance !== null ? <li>{totalDistance} meters</li> : <li>None</li>}
                         </ul>
                     </div>
-                <div id='button-container' className="justify-center text-center flex">
-                    <Button 
-                        className="max-w-50 max-h-10 text-white bg-gradient-to-br from-pink-500 
-                        to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none 
-                        focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm 
-                        px-5 py-2.5 text-center me-2 mb-2 mr-4"
-                        onClick = {handleClear}>
-                        Clear
-                        </Button>
-                    <Button 
-                        className="max-w-50 max-h-10 text-white bg-gradient-to-br from-pink-500 
-                        to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none 
-                        focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm 
-                        px-5 py-2.5 text-center me-2 mb-2 ml-4"
-                        onClick={handleSubmit}>
-                            Submit
-                        </Button>
-                </div>
+                    <div id='button-container' className="justify-center text-center flex">
+                        <Button 
+                            className="max-w-50 max-h-10 text-white bg-gradient-to-br from-pink-500 
+                            to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none 
+                            focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm 
+                            px-5 py-2.5 text-center me-2 mb-2 mr-4"
+                            onClick = {handleClear}>
+                            Clear
+                            </Button>
+                        <Button 
+                            className="max-w-50 max-h-10 text-white bg-gradient-to-br from-pink-500 
+                            to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none 
+                            focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm 
+                            px-5 py-2.5 text-center me-2 mb-2 ml-4"
+                            onClick={handleSubmit}>
+                                Submit
+                            </Button>
+                    </div>
+
+                    {/* ✅ ส่วนแสดงประวัติ */}
+                    <div className="mt-10">
+                            <History />
+                    </div>            
                 </div>
             </div>
         </main>
