@@ -9,18 +9,6 @@
     "title": "Main"
   },
   {
-    "route": "history",
-    "flowLayout": false,
-    "params": {},
-    "title": "History"
-  },
-  {
-    "route": "PathResult",
-    "flowLayout": false,
-    "params": {},
-    "title": "Path Result"
-  },
-  {
     "route": "Svg",
     "flowLayout": false,
     "params": {},

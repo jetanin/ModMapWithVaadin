@@ -3,6 +3,7 @@ package com.fastandfurious.reindeer.DijkstraAlg.controller;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,10 @@ public class PathFinder {
     private final Graph graph = new Graph();
     private final List<SearchHistory> historyList = new ArrayList<>();
 
-    public PathFinder() {
+    @Autowired
+    public PathFinder(HistoryService historyService) {
+        this.historyService = historyService;
+
         for (String node : List.of(
                 "N1", "N2", "N3", "N4", "N5", "N6", "N7", "N8", "N9", "N10",
                 "N11", "N12", "N13", "N14", "N15", "N16", "N17", "N18", "N19", "N20",
@@ -150,11 +154,11 @@ public class PathFinder {
     }
 
     
-    private HistoryService historyService;
+    private final HistoryService historyService;
 
-    public PathFinder(HistoryService historyService) {
-        this.historyService = historyService;
-    }
+    // public PathFinder(HistoryService historyService) {
+    //     this.historyService = historyService;
+    // }
     @GetMapping("/history")
     public List<SearchHistory> getHistory() {
     return historyService.getAllHistory().stream()

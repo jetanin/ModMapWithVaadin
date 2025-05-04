@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@polymer/polymer": "3.5.2",
-    "@tailwindcss/vite": "^4.1.4",
+    "@tailwindcss/vite": "^4.1.5",
     "@vaadin/bundles": "24.7.3",
     "@vaadin/common-frontend": "0.0.19",
     "@vaadin/details": "^24.7.5",
@@ -70,7 +70,7 @@
     "rollup-plugin-brotli": "3.1.0",
     "rollup-plugin-visualizer": "5.14.0",
     "strip-css-comments": "5.0.0",
-    "tailwindcss": "^4.1.4",
+    "tailwindcss": "^4.1.5",
     "transform-ast": "2.4.4",
     "typescript": "5.7.3",
     "vite": "6.2.6",
