@@ -9,6 +9,12 @@
     "title": "Main"
   },
   {
+    "route": "map",
+    "flowLayout": false,
+    "params": {},
+    "title": "Zoomable Image"
+  },
+  {
     "route": "Svg",
     "flowLayout": false,
     "params": {},

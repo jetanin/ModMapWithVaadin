@@ -10,6 +10,7 @@ import axios from 'axios';
 
 import History from '../components/History';
 import PathResult from '../components/PathResult';
+import ZoomableImage from './map';
 
 export const config: ViewConfig = {
     menu: {
@@ -116,7 +117,8 @@ export default function MainView() {
             if (response.data.status === "success") {
                 setNumVerices(response.data.numVerices);
                 setTotalDistance(response.data.totalDistance);
-                alert(`Total Distance: ${response.data.totalDistance} meters`);
+                // alert(`Total Distance: ${response.data.totalDistance} meters`);
+                alert(`Submitted`);
                 setPath(response.data.path);
                 setHistory((prevHistory) => [
                     ...prevHistory,
@@ -166,57 +168,60 @@ export default function MainView() {
           });
       }, []);
 
+
+      
     return (
         
-        <main className="p-4">
-            <div className="justify-center text-center strong text-2xl font-bold text-orange-600" >KMUTT MAP</div>
+        <main className="p-10 bg-orange-100">
+            <div className="justify-center text-center strong text-4xl font-bold text-orange-600 mb-7 sm:justify-center" >MOD MAP</div>
             
-            <div id='container' className="flex flex-col sm:flex-row sm:justify-center sm:items-start sm:gap-6 gap-4">
-                <SvgIcon className='ml-10 mr-10 mt-0 sm: items-center sm:mx-0 sm:ml-10 sm:mt-3'/>
-                
+            <div id='container' className="lg:flex sm:grid justify-center sm:items-start sm:gap-6 gap-4 ">
+                {/* <SvgIcon className='ml-10 mr-10 mt-0 sm: items-center justify-center'/> */}
+                <ZoomableImage/>
                 {/* <div id='checkBoxContainer' className='grid gap-4 sm:min-w-[300px] sm:max-w-[600px] w-full'> */}
-                <div id="checkBoxContainer" className="flex flex-col w-full sm:w-auto gap-4 px-2 sm:px-0">
+                <div id="checkBoxContainer" className="lg:flex-col sm:grid w-2/5 gap-4 px-2 justify-center">
                     <ComboBox
                         label="Select Your Start Point"
-                        className='mb-10 mt-10'
+                        className='mb-10 mt-10 p-5 bg-white shadow-md shadow-orange-800 rounded-l w-full justify-center text-l'
                         items={Building}
-                        style={{width: '100%'}}
                         onValueChanged={handleStartPointChange}
                         disabled={isStartPointLocked}
                     />
-                    <ComboBox
-                        label="Select Your Waypoint(s)"
-                        items={Building.filter((item) => item.value !== selectedStartPoint && !selectedValues.includes(item.value))}
-                        style={{width: '100%'}}
-                        onValueChanged={handleValueChange}
-                    />
+                    <div className='text-l'>
+                        <ComboBox
+                            label="Select Your Waypoint(s)"
+                            className='mb-10 mt-10 p-5 bg-white shadow-md shadow-orange-800 rounded-l w-full justify-center text-l'
+                            items={Building.filter((item) => item.value !== selectedStartPoint && !selectedValues.includes(item.value))}
+                            onValueChanged={handleValueChange}
+                        />
+                    </div>
 
-                    <div className="mt-4 text-left text-sm text-gray-700 sm:text-center">
+                    <div className="mt-4 mb-8 text-left text-gray-700 sm:text-center justify-center p-5 bg-white shadow-md shadow-orange-800 rounded-l w-full text-xl">
                         <strong>Selected Start Point:</strong>{" "}
                         <ul>
-                            {selectedStartPoint ? <li>{selectedStartPoint}</li> : <li>None</li>}
+                            {selectedStartPoint ? <li className='text-l'>{selectedStartPoint}</li> : <li className='text-l'>None</li>}
                         </ul>
-                        <strong>Waypoint:</strong>{" "}
+                            <strong>Waypoint:</strong>{" "}
                         <ul>
                             {selectedValues.map((value, index) => (
-                                <li key={index}>{value}</li>
+                                <li className='text-l'key={index}>{value}</li>
                             ))}
                             {totalDistance !== null ? <PathResult path={path} totalDistance={totalDistance} /> : <li> </li>}
                         </ul>
                     </div>
                     <div id='button-container' className="justify-center text-center flex">
                         <Button 
-                            className="max-w-50 max-h-10 text-white bg-gradient-to-br from-pink-500 
+                            className="max-w-50vw max-h-10 text-white bg-gradient-to-br from-pink-500 
                             to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none 
-                            focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm 
-                            px-5 py-2.5 text-center me-2 mb-2 mr-4"
+                            focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg  
+                            px-5 py-2.5 text-center me-2 mb-2 mr-4 text-xl"
                             onClick = {handleClear}>
                             Clear
                             </Button>
                         <Button 
                             className="max-w-50 max-h-10 text-white bg-gradient-to-br from-pink-500 
                             to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none 
-                            focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm 
+                            focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-xl 
                             px-5 py-2.5 text-center me-2 mb-2 ml-4"
                             onClick={handleSubmit}>
                                 Submit
