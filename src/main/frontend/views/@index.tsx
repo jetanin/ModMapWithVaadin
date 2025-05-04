@@ -1,3 +1,6 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+import '../styles/tailwind.css';
+
 import { Button } from '@vaadin/react-components';
 import { ComboBox } from '@vaadin/react-components';
 import React, {useEffect, useState, useRef} from "react";
@@ -5,8 +8,8 @@ import  SvgIcon  from "./Svg.jsx";
 import {ViewConfig} from "@vaadin/hilla-file-router/types.js";
 import axios from 'axios';
 
-import History from '../views/history';
-import PathResult from '../views/PathResult';
+import History from '../components/history';
+import PathResult from '../components/PathResult';
 
 export const config: ViewConfig = {
     menu: {
@@ -135,53 +138,60 @@ export default function MainView() {
         console.log("Start values:", selectedStartPoint);
         console.log("Selected values:", selectedValues);
 
-        useEffect(() => {
-            if (totalDistance !== null || numVerices !== null) {
-              console.log("Updated totalDistance:", totalDistance);
-              console.log("Updated numVerices:", numVerices);
-            }
-          }, [totalDistance, numVerices]);
-
-        useEffect(() => {
-          fetch('/api/history')
-            .then(res => res.json())
-            .then(data => {
-              if (Array.isArray(data)) {
-                setHistory(data);
-              } else {
-                console.error('Expected array, got:', data);
-              }
-            });
-        }, []);
-          
-          
+        // useEffect(() => {
+        //     if (totalDistance !== null || numVerices !== null) {
+        //       console.log("Updated totalDistance:", totalDistance);
+        //       console.log("Updated numVerices:", numVerices);
+        //     }
+        //   }, [totalDistance, numVerices]);
+ 
     };
+
+    useEffect(() => {
+        if (totalDistance !== null || numVerices !== null) {
+          console.log("Updated totalDistance:", totalDistance);
+          console.log("Updated numVerices:", numVerices);
+        }
+      }, [totalDistance, numVerices]);
+
+    useEffect(() => {
+        fetch('/api/history')
+          .then(res => res.json())
+          .then(data => {
+            if (Array.isArray(data)) {
+              setHistory(data);
+            } else {
+              console.error('Expected array, got:', data);
+            }
+          });
+      }, []);
 
     return (
         
-        <main className="p-m">
-            <div className="justify-center text-center strong text-2xl font-bold text-orange-600">KMUTT MAP</div>
+        <main className="p-4">
+            <div className="justify-center text-center strong text-2xl font-bold text-orange-600" >KMUTT MAP</div>
             
-            <div id='container' className="flex">
-                <SvgIcon className='ml-10 mr-10 mt-3'/>
+            <div id='container' className="flex flex-col sm:flex-row sm:justify-center sm:items-start sm:gap-6 gap-4">
+                <SvgIcon className='ml-10 mr-10 mt-0 sm: items-center sm:mx-0 sm:ml-10 sm:mt-3'/>
                 
-                <div id='checkBoxContainer' className='grid'>
+                {/* <div id='checkBoxContainer' className='grid gap-4 sm:min-w-[300px] sm:max-w-[600px] w-full'> */}
+                <div id="checkBoxContainer" className="flex flex-col w-full sm:w-auto gap-4 px-2 sm:px-0">
                     <ComboBox
                         label="เลือกจุดเริ่มต้น"
                         className='mb-10 mt-10'
                         items={Building}
-                        style={{maxWidth: '1000px', minWidth: '300px', width: '550px'}}
+                        style={{width: '100%'}}
                         onValueChanged={handleStartPointChange}
                         disabled={isStartPointLocked}
                     />
                     <ComboBox
                         label="เลือกสถานที่ที่ต้องการจะแวะ"
                         items={Building.filter((item) => item.value !== selectedStartPoint && !selectedValues.includes(item.value))}
-                        style={{maxWidth: '1000px', minWidth: '300px', width: '550px'}}
+                        style={{width: '100%'}}
                         onValueChanged={handleValueChange}
                     />
 
-                    <div className="mt-4 text-left text-sm text-gray-700">
+                    <div className="mt-4 text-left text-sm text-gray-700 sm:text-center">
                         <strong>Selected Start Point:</strong>{" "}
                         <ul>
                             {selectedStartPoint ? <li>{selectedStartPoint}</li> : <li>None</li>}
@@ -192,10 +202,10 @@ export default function MainView() {
                                 <li key={index}>{value}</li>
                             ))}
                         </ul>
-                        <strong>Number of Vertices:</strong>
+                        {/* <strong>Number of Vertices:</strong>
                         <ul>
                             {numVerices !== null ? <li>{numVerices}</li> : <li>None</li>}
-                        </ul>
+                        </ul> */}
                         <strong>Total Distance:</strong>
                         <ul>
                             {totalDistance !== null ? <li>{totalDistance} meters</li> : <li>None</li>}
@@ -224,9 +234,8 @@ export default function MainView() {
                             </Button>
                     </div>
 
-                    {/* ✅ ส่วนแสดงประวัติ */}
-                    <div className="mt-10">
-                            <History />
+                    <div className="mt-10 sm:text-center">
+                        <History history={history} />
                     </div>            
                 </div>
             </div>
