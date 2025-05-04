@@ -74,7 +74,8 @@ export default function HistoryList({ history }: { history: any[] }) {
         {history.map((item, index) => (
           <li key={index}>
             {index+1}. Start: {item.start}, Visiting: {item.targets.join(', ')}, Distance: {item.totalDistance} m
-            {/* {Array.isArray(item.path) ? item.path.join(' → ') : 'No path data'} */}
+            <br />
+            {Array.isArray(item.path) ? item.path.join(' → ') : 'No path data'}
           </li>
         ))}
       </ul>

@@ -8,7 +8,7 @@ import  SvgIcon  from "./Svg.jsx";
 import {ViewConfig} from "@vaadin/hilla-file-router/types.js";
 import axios from 'axios';
 
-import History from '../components/history';
+import History from '../components/History';
 import PathResult from '../components/PathResult';
 
 export const config: ViewConfig = {
@@ -177,7 +177,7 @@ export default function MainView() {
                 {/* <div id='checkBoxContainer' className='grid gap-4 sm:min-w-[300px] sm:max-w-[600px] w-full'> */}
                 <div id="checkBoxContainer" className="flex flex-col w-full sm:w-auto gap-4 px-2 sm:px-0">
                     <ComboBox
-                        label="เลือกจุดเริ่มต้น"
+                        label="Select Your Start Point"
                         className='mb-10 mt-10'
                         items={Building}
                         style={{width: '100%'}}
@@ -185,7 +185,7 @@ export default function MainView() {
                         disabled={isStartPointLocked}
                     />
                     <ComboBox
-                        label="เลือกสถานที่ที่ต้องการจะแวะ"
+                        label="Select Your Waypoint(s)"
                         items={Building.filter((item) => item.value !== selectedStartPoint && !selectedValues.includes(item.value))}
                         style={{width: '100%'}}
                         onValueChanged={handleValueChange}
@@ -196,23 +196,12 @@ export default function MainView() {
                         <ul>
                             {selectedStartPoint ? <li>{selectedStartPoint}</li> : <li>None</li>}
                         </ul>
-                        <strong>Selected:</strong>{" "}
+                        <strong>Waypoint:</strong>{" "}
                         <ul>
                             {selectedValues.map((value, index) => (
                                 <li key={index}>{value}</li>
                             ))}
-                        </ul>
-                        {/* <strong>Number of Vertices:</strong>
-                        <ul>
-                            {numVerices !== null ? <li>{numVerices}</li> : <li>None</li>}
-                        </ul> */}
-                        <strong>Total Distance:</strong>
-                        <ul>
-                            {totalDistance !== null ? <li>{totalDistance} meters</li> : <li>None</li>}
-                        </ul>
-                        <strong>Path:</strong>
-                        <ul>
-                            {totalDistance !== null ? <PathResult path={path} totalDistance={totalDistance} /> : <li>None</li>}
+                            {totalDistance !== null ? <PathResult path={path} totalDistance={totalDistance} /> : <li> </li>}
                         </ul>
                     </div>
                     <div id='button-container' className="justify-center text-center flex">
