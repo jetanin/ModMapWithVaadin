@@ -171,10 +171,11 @@ export default function MainView() {
         <main className="p-4">
             <div className="justify-center text-center strong text-2xl font-bold text-orange-600" >KMUTT MAP</div>
             
-            <div id='container' className="flex flex-col sm:flex-row sm:justify-center sm:items-start sm:gap-8">
-                <SvgIcon className='ml-10 mr-10 mt-3 sm:items-center '/>
+            <div id='container' className="flex flex-col sm:flex-row sm:justify-center sm:items-start sm:gap-6 gap-4">
+                <SvgIcon className='ml-10 mr-10 mt-0 sm: items-center sm:mx-0 sm:ml-10 sm:mt-3'/>
                 
-                <div id='checkBoxContainer' className='grid gap-4 sm:min-w-[300px] sm:max-w-[600px] w-full'>
+                {/* <div id='checkBoxContainer' className='grid gap-4 sm:min-w-[300px] sm:max-w-[600px] w-full'> */}
+                <div id="checkBoxContainer" className="flex flex-col w-full sm:w-auto gap-4 px-2 sm:px-0">
                     <ComboBox
                         label="เลือกจุดเริ่มต้น"
                         className='mb-10 mt-10'
@@ -190,7 +191,7 @@ export default function MainView() {
                         onValueChanged={handleValueChange}
                     />
 
-                    <div className="mt-4 text-left text-sm text-gray-700">
+                    <div className="mt-4 text-left text-sm text-gray-700 sm:text-center">
                         <strong>Selected Start Point:</strong>{" "}
                         <ul>
                             {selectedStartPoint ? <li>{selectedStartPoint}</li> : <li>None</li>}
