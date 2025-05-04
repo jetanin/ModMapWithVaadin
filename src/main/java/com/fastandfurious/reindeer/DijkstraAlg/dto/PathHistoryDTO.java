@@ -7,13 +7,16 @@ public class PathHistoryDTO {
     private Long id;
     private String startPoint;
     private List<String> destinations;
-    private double totalDistance;
+    private int totalDistance;
     private LocalDateTime timestamp;
+
+    private List<String> waypointList;
+    private List<String> path;          
 
     // Constructors
     public PathHistoryDTO() {}
 
-    public PathHistoryDTO(Long id, String startPoint, List<String> destinations, double totalDistance, LocalDateTime timestamp) {
+    public PathHistoryDTO(Long id, String startPoint, List<String> destinations, int totalDistance, LocalDateTime timestamp) {
         this.id = id;
         this.startPoint = startPoint;
         this.destinations = destinations;
@@ -46,11 +49,11 @@ public class PathHistoryDTO {
         this.destinations = destinations;
     }
 
-    public double getTotalDistance() {
+    public int getTotalDistance() {
         return totalDistance;
     }
 
-    public void setTotalDistance(double totalDistance) {
+    public void setTotalDistance(int totalDistance) {
         this.totalDistance = totalDistance;
     }
 
@@ -60,5 +63,21 @@ public class PathHistoryDTO {
 
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public List<String> getWaypointList() {
+        return waypointList;
+    }
+
+    public void setWaypointList(List<String> waypointList) {
+        this.waypointList = waypointList;
+    }
+
+    public List<String> getPath() {
+        return path;
+    }
+
+    public void setPath(List<String> path) {
+        this.path = path;
     }
 }
