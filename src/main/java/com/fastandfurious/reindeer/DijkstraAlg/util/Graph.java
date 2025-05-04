@@ -52,6 +52,7 @@ public class Graph {
         addNode(from);
         addNode(to);
         adjList.get(from).add(new Edge(to, weight));
+        adjList.get(to).add(new Edge(from, weight)); // Assuming undirected graph, add edge in both directions
     }
     
 }

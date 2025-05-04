@@ -1,26 +1,25 @@
 package com.fastandfurious.reindeer.base.domain;
 
-import java.time.LocalDateTime;
+// import java.time.LocalDateTime;
 import java.util.List;
 
 public class SearchHistory {
-    private String start;
-    private List<String> waypoints;
+    private String startPoint;
+    private List<String> waypointList;
     private int totalDistance;
-    private List<String> fullPath;
-    private LocalDateTime timestamp;
+    private List<String> path;
+    // private LocalDateTime timestamp;
 
-    public SearchHistory(String start, List<String> waypoints, int totalDistance, List<String> fullPath) {
-        this.start = start;
-        this.waypoints = waypoints;
+    public SearchHistory(String startPoint, List<String> waypointList, int totalDistance, List<String> path) {
+        this.startPoint = startPoint;
+        this.waypointList = waypointList;
         this.totalDistance = totalDistance;
-        this.fullPath = fullPath;
-        this.timestamp = LocalDateTime.now();
+        this.path = path;
     }
 
-    public String getStart() { return start; }
-    public List<String> getWaypoints() { return waypoints; }
+    public String getStart() { return startPoint; }
+    public List<String> getWaypoints() { return waypointList; }
     public int getTotalDistance() { return totalDistance; }
-    public List<String> getFullPath() { return fullPath; }
-    public LocalDateTime getTimestamp() { return timestamp; }
+    public List<String> getFullPath() { return path; }
+    // public LocalDateTime getTimestamp() { return timestamp; }
 }

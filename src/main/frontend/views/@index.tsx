@@ -5,7 +5,8 @@ import  SvgIcon  from "./Svg.jsx";
 import {ViewConfig} from "@vaadin/hilla-file-router/types.js";
 import axios from 'axios';
 
-import History from '../components/History';
+import History from '../views/history';
+import PathResult from '../views/PathResult';
 
 export const config: ViewConfig = {
     menu: {
@@ -19,6 +20,8 @@ export default function MainView() {
     const [isStartPointLocked, setIsStartPointLocked] = useState<boolean>(false);
     const [totalDistance, setTotalDistance] = useState<number | null>(null);
     const [numVerices, setNumVerices] = useState<number | null>(null);
+    const [history, setHistory] = useState<any[]>([]); // State to store history data
+    const [path, setPath] = useState<string[]>([]); // State to store path data
     const Building = [
         { label: '● S1 อาคารวิศวกรรมเครื่องกล 4 (Mechanical Engineering Building 4)', value: 'S1' },
         { label: '● S2 อาคารจอดรถ (Car Parking Building)', value: 'S2' },
@@ -86,10 +89,12 @@ export default function MainView() {
         setNumVerices(null);
         setTotalDistance(null);
         setIsStartPointLocked(false);
+        setPath([]);
         console.log("Start values:", selectedStartPoint);
         console.log("Cleared values:", selectedValues);
         console.log("NumVertices:", numVerices);
         console.log("Total Distance:", totalDistance);
+        console.log("Path:", path);
     };
     
     const handleSubmit = async () => {
@@ -109,6 +114,16 @@ export default function MainView() {
                 setNumVerices(response.data.numVerices);
                 setTotalDistance(response.data.totalDistance);
                 alert(`Total Distance: ${response.data.totalDistance} meters`);
+                setPath(response.data.path);
+                setHistory((prevHistory) => [
+                    ...prevHistory,
+                    {
+                        start: selectedStartPoint,
+                        targets: selectedValues,
+                        numVertices: response.data.numVerices,
+                        totalDistance: response.data.totalDistance,
+                    },
+                ]);
             } else {
                 alert(`Error: ${response.data.message}`);
             }
@@ -119,8 +134,27 @@ export default function MainView() {
         console.log("Submitted");
         console.log("Start values:", selectedStartPoint);
         console.log("Selected values:", selectedValues);
-        console.log("NumVertices:", numVerices);
-        console.log("Total Distance:", totalDistance);
+
+        useEffect(() => {
+            if (totalDistance !== null || numVerices !== null) {
+              console.log("Updated totalDistance:", totalDistance);
+              console.log("Updated numVerices:", numVerices);
+            }
+          }, [totalDistance, numVerices]);
+
+        useEffect(() => {
+          fetch('/api/history')
+            .then(res => res.json())
+            .then(data => {
+              if (Array.isArray(data)) {
+                setHistory(data);
+              } else {
+                console.error('Expected array, got:', data);
+              }
+            });
+        }, []);
+          
+          
     };
 
     return (
@@ -165,6 +199,10 @@ export default function MainView() {
                         <strong>Total Distance:</strong>
                         <ul>
                             {totalDistance !== null ? <li>{totalDistance} meters</li> : <li>None</li>}
+                        </ul>
+                        <strong>Path:</strong>
+                        <ul>
+                            {totalDistance !== null ? <PathResult path={path} totalDistance={totalDistance} /> : <li>None</li>}
                         </ul>
                     </div>
                     <div id='button-container' className="justify-center text-center flex">

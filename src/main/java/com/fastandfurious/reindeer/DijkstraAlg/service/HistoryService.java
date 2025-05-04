@@ -12,7 +12,7 @@ public class HistoryService {
     private final List<PathHistoryDTO> historyList = new ArrayList<>();
     private long counter = 1;
 
-    public void saveHistory(String start, List<String> destinations, double distance) {
+    public void saveHistory(String start, List<String> destinations, int distance) {
         PathHistoryDTO dto = new PathHistoryDTO();
         dto.setId(counter++);
         dto.setStartPoint(start);

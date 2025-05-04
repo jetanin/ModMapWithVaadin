@@ -1,10 +1,13 @@
 package com.fastandfurious.reindeer.DijkstraAlg.controller;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.fastandfurious.reindeer.DijkstraAlg.service.HistoryService;
 import com.fastandfurious.reindeer.DijkstraAlg.util.Graph;
 import com.fastandfurious.reindeer.base.domain.SearchHistory;
 
@@ -17,12 +20,10 @@ public class PathFinder {
         public List<String> selectedValues;
     }
 
-    private final Graph graph;
+    private final Graph graph = new Graph();
     private final List<SearchHistory> historyList = new ArrayList<>();
 
     public PathFinder() {
-        this.graph = new Graph();
-        // Add nodes
         for (String node : List.of(
                 "N1", "N2", "N3", "N4", "N5", "N6", "N7", "N8", "N9", "N10",
                 "N11", "N12", "N13", "N14", "N15", "N16", "N17", "N18", "N19", "N20",
@@ -41,7 +42,7 @@ public class PathFinder {
         graph.addEdge("S10", "S4", 40);
         graph.addEdge("S8", "S9", 50);
         graph.addEdge("S10", "S11", 50);
-        graph.addEdge("S9", "s11", 40);
+        graph.addEdge("S9", "S11", 40);
         graph.addEdge("S4", "S11", 50);
         graph.addEdge("S11", "S15", 20);
         graph.addEdge("S4", "S15", 60);
@@ -99,73 +100,6 @@ public class PathFinder {
         graph.addEdge("N7", "N8", 20);
         graph.addEdge("N8", "N9", 100);
 
-        graph.addEdge("S7", "S6", 30);
-        graph.addEdge("S5", "S6", 20);
-        graph.addEdge("S5", "S7", 30);
-        graph.addEdge("S4", "S7", 70);
-        graph.addEdge("S4", "S5", 50);
-        graph.addEdge("S8", "S7", 50);
-        graph.addEdge("S4", "S8", 100);
-        graph.addEdge("S10", "S8", 50);
-        graph.addEdge("S4", "S10", 40);
-        graph.addEdge("S9", "S8", 50);
-        graph.addEdge("S11", "S10", 50);
-        graph.addEdge("s11", "S9", 40);
-        graph.addEdge("S11", "S4", 50);
-        graph.addEdge("S15", "S11", 20);
-        graph.addEdge("S15", "S4", 60);
-        graph.addEdge("S12", "S9", 50);
-        graph.addEdge("S12", "S11", 30);
-        graph.addEdge("S12", "S15", 60);
-        graph.addEdge("S12", "S13", 50);
-        graph.addEdge("S14", "S13", 30);
-        graph.addEdge("S3", "S5", 90);
-        graph.addEdge("S3", "S4", 110);
-        graph.addEdge("S2", "S3", 50);
-        graph.addEdge("S1", "S2", 20);
-        graph.addEdge("S1", "S4", 30);
-        graph.addEdge("N14", "S14", 120);
-        graph.addEdge("N13", "N14", 30);
-        graph.addEdge("N12", "N14", 30);
-        graph.addEdge("N13", "N15", 30);
-        graph.addEdge("N12", "N15", 30);
-        graph.addEdge("N15", "N14", 50);
-        graph.addEdge("N20", "N15", 40);
-        graph.addEdge("N20", "N19", 30);
-        graph.addEdge("N20", "S14", 160);
-        graph.addEdge("N19", "S15", 100);
-        graph.addEdge("N18", "N19", 20);
-        graph.addEdge("N20", "N18", 20);
-        graph.addEdge("N17", "N20", 20);
-        graph.addEdge("N17", "N15", 30);
-        graph.addEdge("N17", "N18", 20);
-        graph.addEdge("N18", "S4", 90);
-        graph.addEdge("N17", "S4", 80);
-        graph.addEdge("N16", "N17", 20);
-        graph.addEdge("N15", "N16", 40);
-        graph.addEdge("N11", "N16", 40);
-        graph.addEdge("N15", "N11", 60);
-        graph.addEdge("N13", "N11", 70);
-        graph.addEdge("N12", "N11", 70);
-        graph.addEdge("N10", "N11", 10);
-        graph.addEdge("N10", "N16", 50);
-        graph.addEdge("N10", "N4", 30);
-        graph.addEdge("N5", "N10", 60);
-        graph.addEdge("N5", "N4", 20);
-        graph.addEdge("N6", "N5", 20);
-        graph.addEdge("N7", "N6", 40);
-        graph.addEdge("N7", "N4", 70);
-        graph.addEdge("N7", "N3", 50);
-        graph.addEdge("N4", "N3", 20);
-        graph.addEdge("N2", "N16", 70);
-        graph.addEdge("N4", "N2", 60);
-        graph.addEdge("N3", "N2", 50);
-        graph.addEdge("N1", "N2", 50);
-        graph.addEdge("S1", "N1", 90);
-        graph.addEdge("S4", "N1", 120);
-        graph.addEdge("N9", "N5", 150);
-        graph.addEdge("N9", "N7", 80);
-
     }
 
     // @PostMapping("/PathFinder")
@@ -196,8 +130,7 @@ public class PathFinder {
         Map<String, Object> response = new HashMap<>();
         String start = request.selectedStartPoint;
         List<String> waypoints = request.selectedValues;
-        String end = waypoints.get(waypoints.size() - 1);
-        waypoints = waypoints.subList(0, waypoints.size() - 1);
+        String end = request.selectedStartPoint;
     
         try {
             RouteFinder.Result result = RouteFinder.findRoute(graph, start, waypoints, end);
@@ -216,15 +149,24 @@ public class PathFinder {
         }
     }
 
+    
+    private HistoryService historyService;
 
+    public PathFinder(HistoryService historyService) {
+        this.historyService = historyService;
+    }
     @GetMapping("/history")
     public List<SearchHistory> getHistory() {
-        return historyList;
+    return historyService.getAllHistory().stream()
+            .map(dto -> new SearchHistory(
+                    dto.getStartPoint(),
+                    dto.getWaypointList(),
+                    dto.getTotalDistance(),
+                    dto.getPath()
+            ))
+            .collect(Collectors.toList());
     }
 
-    // =====================================
-    // Dijkstra Algorithm Implementation
-    // =====================================
     public static class Dijkstra {
 
         public static Map<String, Integer> findShortestDistances(Graph graph, String start, Map<String, String> previous) {
@@ -276,10 +218,6 @@ public class PathFinder {
             }
         }
     }
-
-    // =====================================
-    // RouteFinder Logic
-    // =====================================
     public static class RouteFinder {
         public static class Result {
             public final List<String> path;
@@ -298,6 +236,8 @@ public class PathFinder {
             allPoints.add(end);
 
             List<String> fullPath = new ArrayList<>();
+            
+            List<SegmentDetail> segmentDetails = new ArrayList<>();
             int totalDistance = 0;
 
             for (int i = 0; i < allPoints.size() - 1; i++) {
@@ -305,18 +245,48 @@ public class PathFinder {
                 String to = allPoints.get(i + 1);
                 Map<String, String> previous = new HashMap<>();
                 Map<String, Integer> distances = Dijkstra.findShortestDistances(graph, from, previous);
-                List<String> segment = Dijkstra.getPath(previous, to);
+                List<String> segmentPath = Dijkstra.getPath(previous, to);
 
-                if (segment.isEmpty()) {
+                if (segmentPath.isEmpty()) {
                     throw new RuntimeException("No path found from " + from + " to " + to);
                 }
 
-                if (i > 0) segment.remove(0); // avoid duplicating nodes
-                fullPath.addAll(segment);
+                if (i > 0) segmentPath.remove(0); // avoid duplicating nodes
+                fullPath.addAll(segmentPath);
+
+                int distance = distances.get(to);
                 totalDistance += distances.get(to);
+                segmentDetails.add(new SegmentDetail(from, to, segmentPath, distance));
             }
 
             return new Result(fullPath, totalDistance);
         }
     }
-}
+
+    public static class SegmentDetail {
+        public final String from;
+        public final String to;
+        public final List<String> path;
+        public final int distance;
+    
+        public SegmentDetail(String from, String to, List<String> path, int distance) {
+            this.from = from;
+            this.to = to;
+            this.path = path;
+            this.distance = distance;
+        }
+    }
+    
+    public static class Result {
+        public final List<String> path;
+        public final int totalDistance;
+        public final List<SegmentDetail> segments;
+    
+        public Result(List<String> path, int totalDistance, List<SegmentDetail> segments) {
+            this.path = path;
+            this.totalDistance = totalDistance;
+            this.segments = segments;
+        }
+    }
+    
+}   
