@@ -1,13 +1,13 @@
-com\fastandfurious\reindeer\taskmanagement\service\package-info.class
 com\fastandfurious\reindeer\taskmanagement\service\TaskService.class
 com\fastandfurious\reindeer\base\domain\AbstractEntity.class
 com\fastandfurious\reindeer\base\ui\component\ViewToolbar.class
 com\fastandfurious\reindeer\base\ui\component\package-info.class
 com\fastandfurious\reindeer\base\ui\view\MainErrorHandler.class
 com\fastandfurious\reindeer\Application.class
-com\fastandfurious\reindeer\taskmanagement\domain\TaskRepository.class
 com\fastandfurious\reindeer\taskmanagement\package-info.class
 com\fastandfurious\reindeer\base\domain\package-info.class
+com\fastandfurious\reindeer\taskmanagement\service\package-info.class
+com\fastandfurious\reindeer\taskmanagement\domain\TaskRepository.class
 com\fastandfurious\reindeer\taskmanagement\domain\package-info.class
 com\fastandfurious\reindeer\base\ui\view\package-info.class
 com\fastandfurious\reindeer\taskmanagement\ui\view\TaskListView.class

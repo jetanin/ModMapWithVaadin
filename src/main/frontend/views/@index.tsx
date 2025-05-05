@@ -4,13 +4,14 @@ import '../styles/tailwind.css';
 import { Button } from '@vaadin/react-components';
 import { ComboBox } from '@vaadin/react-components';
 import React, {useEffect, useState, useRef} from "react";
-import  SvgIcon  from "./Svg.jsx";
 import {ViewConfig} from "@vaadin/hilla-file-router/types.js";
 import axios from 'axios';
+import { Toaster, toast } from 'sonner'
 
 import History from '../components/History';
 import PathResult from '../components/PathResult';
-import ZoomableImage from './map';
+import ZoomableImage from '../components/map';
+
 
 export const config: ViewConfig = {
     menu: {
@@ -22,6 +23,7 @@ export default function MainView() {
     const [selectedStartPoint, setSelectedStartPoint] = useState<string | null>(null);
     const [selectedValues, setSelectedValues] = useState<string[]>([]);
     const [isStartPointLocked, setIsStartPointLocked] = useState<boolean>(false);
+    const [isWaypointLocked, setIsWaypointLocked] = useState<boolean>(true);
     const [totalDistance, setTotalDistance] = useState<number | null>(null);
     const [numVerices, setNumVerices] = useState<number | null>(null);
     const [history, setHistory] = useState<any[]>([]); // State to store history data
@@ -62,12 +64,12 @@ export default function MainView() {
         { label: '● N18 อาคารปฏิบัติการทางวิศวกรรมอุตสาหการ 4 (Production Engineering Laboratory Building 4)', value: 'N18' },
         { label: '● N19 อาคารปฏิบัติการทางวิศวกรรมอุตสาหการ 5 (Production Engineering Laboratory Building 5)', value: 'N19' },
         { label: '● N20 อาคารเรียนรวม 1 (Classroom Building 1)', value: 'N20' }
-    ];
-
+    ];    
     const handleStartPointChange = (event: any) => {
         const startValue = event.detail.value;
         setSelectedStartPoint(startValue);
         setIsStartPointLocked(true);
+        setIsWaypointLocked(false);
         console.log(startValue);
     };
 
@@ -94,6 +96,7 @@ export default function MainView() {
         setTotalDistance(null);
         setIsStartPointLocked(false);
         setPath([]);
+        toast.success('Cleared');
         console.log("Start values:", selectedStartPoint);
         console.log("Cleared values:", selectedValues);
         console.log("NumVertices:", numVerices);
@@ -103,7 +106,7 @@ export default function MainView() {
     
     const handleSubmit = async () => {
         if (!selectedStartPoint || selectedValues.length === 0) {
-            alert("Please select a start point and at least one value.");
+            toast.warning('Please select a start point and at least one waypoint.');
             return;
         }
     
@@ -117,8 +120,7 @@ export default function MainView() {
             if (response.data.status === "success") {
                 setNumVerices(response.data.numVerices);
                 setTotalDistance(response.data.totalDistance);
-                // alert(`Total Distance: ${response.data.totalDistance} meters`);
-                alert(`Submitted`);
+                toast.success('Summited');
                 setPath(response.data.path);
                 setHistory((prevHistory) => [
                     ...prevHistory,
@@ -130,11 +132,11 @@ export default function MainView() {
                     },
                 ]);
             } else {
-                alert(`Error: ${response.data.message}`);
+                toast.warning(`Error: ${response.data.message}`);
             }
         } catch (error) {
             console.error("Error submitting data:", error);
-            alert("An unexpected error occurred. Please try again.");
+            toast.warning("An unexpected error occurred. Please try again.");
         }
         console.log("Submitted");
         console.log("Start values:", selectedStartPoint);
@@ -171,15 +173,14 @@ export default function MainView() {
 
       
     return (
-        
         <main className="p-10 bg-orange-100">
-            <div className="justify-center text-center strong text-4xl font-bold text-orange-600 mb-7 sm:justify-center" >MOD MAP</div>
+            <Toaster position='top-center' richColors/>
+            <div className="justify-center text-center strong text-4xl font-bold text-orange-600 mb-7 lg:justify-center" >MOD MAP</div>
             
-            <div id='container' className="lg:flex sm:grid justify-center sm:items-start sm:gap-6 gap-4 ">
-                {/* <SvgIcon className='ml-10 mr-10 mt-0 sm: items-center justify-center'/> */}
-                <ZoomableImage/>
+            <div id='all-container' className="xl:flex lg:grid justify-center sm:gap-6 gap-4 ">
+                <ZoomableImage />
                 {/* <div id='checkBoxContainer' className='grid gap-4 sm:min-w-[300px] sm:max-w-[600px] w-full'> */}
-                <div id="checkBoxContainer" className="lg:flex-col sm:grid w-2/5 gap-4 px-2 justify-center">
+                <div id="checkBoxContainer" className="xl:flex-col lg:grid lx:w-2/5 lg:w-full gap-4 px-2 justify-center">
                     <ComboBox
                         label="Select Your Start Point"
                         className='mb-10 mt-10 p-5 bg-white shadow-md shadow-orange-800 rounded-l w-full justify-center text-l'
@@ -193,6 +194,7 @@ export default function MainView() {
                             className='mb-10 mt-10 p-5 bg-white shadow-md shadow-orange-800 rounded-l w-full justify-center text-l'
                             items={Building.filter((item) => item.value !== selectedStartPoint && !selectedValues.includes(item.value))}
                             onValueChanged={handleValueChange}
+                            disabled={isWaypointLocked}
                         />
                     </div>
 
@@ -217,7 +219,7 @@ export default function MainView() {
                             px-5 py-2.5 text-center me-2 mb-2 mr-4 text-xl"
                             onClick = {handleClear}>
                             Clear
-                            </Button>
+                        </Button>
                         <Button 
                             className="max-w-50 max-h-10 text-white bg-gradient-to-br from-pink-500 
                             to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none 
@@ -228,9 +230,9 @@ export default function MainView() {
                             </Button>
                     </div>
 
-                    <div className="mt-10 sm:text-center">
+                    <div className="mt-5 sm:text-center">
                         <History history={history} />
-                    </div>            
+                    </div>
                 </div>
             </div>
         </main>

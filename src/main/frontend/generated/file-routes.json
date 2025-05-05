@@ -7,17 +7,5 @@
     "flowLayout": false,
     "params": {},
     "title": "Main"
-  },
-  {
-    "route": "map",
-    "flowLayout": false,
-    "params": {},
-    "title": "Zoomable Image"
-  },
-  {
-    "route": "Svg",
-    "flowLayout": false,
-    "params": {},
-    "title": "S V G Component"
   }
 ]
