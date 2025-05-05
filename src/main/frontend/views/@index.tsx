@@ -180,7 +180,7 @@ export default function MainView() {
             <div id='all-container' className="xl:flex lg:grid justify-center sm:gap-6 gap-4 ">
                 <ZoomableImage />
                 {/* <div id='checkBoxContainer' className='grid gap-4 sm:min-w-[300px] sm:max-w-[600px] w-full'> */}
-                <div id="checkBoxContainer" className="xl:flex-col lg:grid lx:w-2/5 lg:w-full gap-4 px-2 justify-center">
+                <div id="checkBoxContainer" className="xl:flex-col lg:grid lx:w-2/5 lg:w-full gap-4 px-2 justify-center xl:ml-20 xl:left-3.5">
                     <ComboBox
                         label="Select Your Start Point"
                         className='mb-10 mt-10 p-5 bg-white shadow-md shadow-orange-800 rounded-l w-full justify-center text-l'
@@ -230,7 +230,7 @@ export default function MainView() {
                             </Button>
                     </div>
 
-                    <div className="mt-5 sm:text-center">
+                    <div className="mt-5 lg:text-center">
                         <History history={history} />
                     </div>
                 </div>

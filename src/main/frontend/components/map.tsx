@@ -4,8 +4,7 @@ import SvgComponent from './Svg';
 import * as React from "react";
 const SVGComponent: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg
-    width={'100%'}
-    height={'100%'}
+    className="w-[80vw] h-[57vw] sm:w-[57vw] sm:h-[80vh]"
     viewBox="0 0 1202 851"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -872,7 +871,7 @@ const ZoomableImage: React.FC = () => {
   return (
       <TransformWrapper
         initialScale={1}
-        minScale={0.5}
+        minScale={1}
         maxScale={5}
         wheel={{ step: 0.1 }}
         doubleClick={{ disabled: true }}
@@ -880,12 +879,10 @@ const ZoomableImage: React.FC = () => {
       >
         {({ zoomIn, zoomOut, resetTransform }) => (
           <>
-          <div id='Map_Conntainer'className='grid xl:ml-10 lg:ml-0 '>
-            <div className='w-full h-fit'>
+          <div id='Map_Conntainer'className='grid xl:ml-10 xl:mr-10'>
                 <TransformComponent>
                     <SVGComponent/>
                 </TransformComponent>
-            </div>
             <div className='flex justify-center mt-2'>
               <button className="max-w-50 max-h-10 text-white bg-gradient-to-br from-pink-500 
                             to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none 
