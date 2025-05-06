@@ -21,13 +21,15 @@ export const config: ViewConfig = {
 
 export default function MainView() {
     const [selectedStartPoint, setSelectedStartPoint] = useState<string | null>(null);
+    const [tempStartPoint, setTempStartPoint ] =useState<string | null >(null);
     const [selectedValues, setSelectedValues] = useState<string[]>([]);
+    const [tempWaypoint, setTempWaypoint ] =useState<string | null >(null);
     const [isStartPointLocked, setIsStartPointLocked] = useState<boolean>(false);
     const [isWaypointLocked, setIsWaypointLocked] = useState<boolean>(true);
     const [totalDistance, setTotalDistance] = useState<number | null>(null);
     const [numVerices, setNumVerices] = useState<number | null>(null);
-    const [history, setHistory] = useState<any[]>([]); // State to store history data
-    const [path, setPath] = useState<string[]>([]); // State to store path data
+    const [history, setHistory] = useState<any[]>([]);
+    const [path, setPath] = useState<string[]>([]);
     const Building = [
         { label: '● S1 อาคารวิศวกรรมเครื่องกล 4 (Mechanical Engineering Building 4)', value: 'S1' },
         { label: '● S2 อาคารจอดรถ (Car Parking Building)', value: 'S2' },
@@ -66,7 +68,7 @@ export default function MainView() {
         { label: '● N20 อาคารเรียนรวม 1 (Classroom Building 1)', value: 'N20' }
     ];    
     const handleStartPointChange = (event: any) => {
-        const startValue = event.detail.value;
+        let startValue = event.detail.value;
         setSelectedStartPoint(startValue);
         setIsStartPointLocked(true);
         setIsWaypointLocked(false);
@@ -74,7 +76,7 @@ export default function MainView() {
     };
 
     const handleValueChange = (event: any) => {
-        const value = event.detail.value;
+        let value = event.detail.value;
         console.log('Selected values:', value);
         if (value === selectedStartPoint) {
             console.log(`Value "${value}" is the same as the start point and will not be added.`);
@@ -95,6 +97,8 @@ export default function MainView() {
         setNumVerices(null);
         setTotalDistance(null);
         setIsStartPointLocked(false);
+        setTempStartPoint('');
+        setTempWaypoint('');
         setPath([]);
         toast.success('Cleared');
         console.log("Start values:", selectedStartPoint);
@@ -141,14 +145,6 @@ export default function MainView() {
         console.log("Submitted");
         console.log("Start values:", selectedStartPoint);
         console.log("Selected values:", selectedValues);
-
-        // useEffect(() => {
-        //     if (totalDistance !== null || numVerices !== null) {
-        //       console.log("Updated totalDistance:", totalDistance);
-        //       console.log("Updated numVerices:", numVerices);
-        //     }
-        //   }, [totalDistance, numVerices]);
- 
     };
 
     useEffect(() => {
@@ -180,7 +176,7 @@ export default function MainView() {
             <div id='all-container' className="xl:flex lg:grid justify-center sm:gap-6 gap-4 ">
                 <ZoomableImage />
                 {/* <div id='checkBoxContainer' className='grid gap-4 sm:min-w-[300px] sm:max-w-[600px] w-full'> */}
-                <div id="checkBoxContainer" className="xl:flex-col lg:grid lx:w-2/5 lg:w-full gap-4 px-2 justify-center xl:ml-20 xl:left-3.5">
+                <div id="checkBoxContainer" className="xl:flex-col lg:grid lx:w-2/5 lg:w-full gap-4 px-2 justify-center xl:ml-20 xl:left-3.5 xl:pl-200">
                     <ComboBox
                         label="Select Your Start Point"
                         className='mb-10 mt-10 p-5 bg-white shadow-md shadow-orange-800 rounded-l w-full justify-center text-l'

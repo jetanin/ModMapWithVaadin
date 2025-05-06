@@ -13,7 +13,6 @@ public class PathHistoryDTO {
     private List<String> waypointList;
     private List<String> path;          
 
-    // Constructors
     public PathHistoryDTO() {}
 
     public PathHistoryDTO(Long id, String startPoint, List<String> destinations, int totalDistance, LocalDateTime timestamp) {
@@ -24,7 +23,6 @@ public class PathHistoryDTO {
         this.timestamp = timestamp;
     }
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }

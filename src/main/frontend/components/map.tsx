@@ -4,10 +4,13 @@ import SvgComponent from './Svg';
 import * as React from "react";
 const SVGComponent: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg
-    className="w-[80vw] h-[57vw] sm:w-[57vw] sm:h-[80vh]"
+    className="w-[70vw] h-[55vw] lg:w-[57vw] lg:h-[80vh]"
+    // height={1202}
+    // width={851}
     viewBox="0 0 1202 851"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    preserveAspectRatio="xMidYMid meet"
     xmlnsXlink="http://www.w3.org/1999/xlink"
     {...props}
   >
@@ -879,7 +882,7 @@ const ZoomableImage: React.FC = () => {
       >
         {({ zoomIn, zoomOut, resetTransform }) => (
           <>
-          <div id='Map_Conntainer'className='grid xl:ml-10 xl:mr-10'>
+          <div id='Map_Conntainer'className='position-relative grid ml-10 xl:mr-10 xl:w-100vw xl:h-57vw lg:w-57vw lg:h-80vh ่justify-center'>
                 <TransformComponent>
                     <SVGComponent/>
                 </TransformComponent>

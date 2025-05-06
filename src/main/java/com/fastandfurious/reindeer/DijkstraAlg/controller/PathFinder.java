@@ -1,12 +1,24 @@
 package com.fastandfurious.reindeer.DijkstraAlg.controller;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.fastandfurious.reindeer.DijkstraAlg.service.HistoryService;
 import com.fastandfurious.reindeer.DijkstraAlg.util.Graph;
@@ -106,29 +118,6 @@ public class PathFinder {
 
     }
 
-    // @PostMapping("/PathFinder")
-    // public ResponseEntity<Map<String, Object>> calculate(@RequestBody RequestData request) {
-    //     Map<String, Object> response = new HashMap<>();
-    //     String start = request.selectedStartPoint;
-    //     String end = request.selectedStartPoint;
-    //     List<String> waypoints = request.selectedValues;
-
-    //     try {
-    //         RouteFinder.Result result = RouteFinder.findRoute(graph, start, waypoints, end);
-    //         SearchHistory history = new SearchHistory(start, waypoints, result.totalDistance, result.path);
-    //         historyList.add(history);
-
-    //         response.put("status", "success");
-    //         response.put("numVertices", result.path.size());
-    //         response.put("totalDistance", result.totalDistance);
-    //         response.put("path", result.path);
-    //         return ResponseEntity.ok(response);
-    //     } catch (Exception e) {
-    //         response.put("status", "error");
-    //         response.put("message", e.getMessage());
-    //         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-    //     }
-    // }
     @PostMapping("/PathFinder")
     public ResponseEntity<Map<String, Object>> calculate(@RequestBody RequestData request) {
         Map<String, Object> response = new HashMap<>();
@@ -156,9 +145,6 @@ public class PathFinder {
     
     private final HistoryService historyService;
 
-    // public PathFinder(HistoryService historyService) {
-    //     this.historyService = historyService;
-    // }
     @GetMapping("/history")
     public List<SearchHistory> getHistory() {
     return historyService.getAllHistory().stream()
@@ -255,7 +241,7 @@ public class PathFinder {
                     throw new RuntimeException("No path found from " + from + " to " + to);
                 }
 
-                if (i > 0) segmentPath.remove(0); // avoid duplicating nodes
+                if (i > 0) segmentPath.remove(0);
                 fullPath.addAll(segmentPath);
 
                 int distance = distances.get(to);

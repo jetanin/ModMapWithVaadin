@@ -20,7 +20,7 @@ export default function HistoryList({ history }: { history: any[] }) {
             <li key={index}>
               {index+1}. Start: {item.start}, Visiting: {item.targets.join(', ')}, Distance: {item.totalDistance} m
               <br />
-              {Array.isArray(item.path) && item.path.length > 0 ? item.path.join(' → ') : 'No path data'}
+              {/* {Array.isArray(item.path) && item.path.length > 0 ? item.path.join(' → ') : 'No path data'} */}
             </li>
           ))}
           </div>
