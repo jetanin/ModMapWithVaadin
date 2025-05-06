@@ -142,6 +142,13 @@ export default function MainView() {
             console.error("Error submitting data:", error);
             toast.warning("An unexpected error occurred. Please try again.");
         }
+
+        // Reset ComboBox values
+        setSelectedStartPoint(null);
+        setSelectedValues([]);
+        setIsStartPointLocked(false);
+        setIsWaypointLocked(true);
+
         console.log("Submitted");
         console.log("Start values:", selectedStartPoint);
         console.log("Selected values:", selectedValues);
