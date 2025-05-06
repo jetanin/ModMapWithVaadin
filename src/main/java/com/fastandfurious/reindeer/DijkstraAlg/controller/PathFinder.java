@@ -54,7 +54,7 @@ public class PathFinder {
         graph.addEdge("S11", "S12", 30);
         graph.addEdge("S15", "S12", 60);
         graph.addEdge("S13", "S12", 50);
-        graph.addEdge("S13", "S14", 30);
+        graph.addEdge("S13", "S14", 80);
         graph.addEdge("S5", "S3", 90);
         graph.addEdge("S4", "S3", 110);
         graph.addEdge("S3", "S2", 50);
